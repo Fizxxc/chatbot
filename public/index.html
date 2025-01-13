@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="admin.jpeg" alt="Admin Avatar">
+            <div>
+                <p>Chat Admin Fizzx</p>
+                <span id="adminStatus" class="status offline">Offline</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <p>Welcome! Start the conversation by sending a message.</p>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="userMessageInput" placeholder="Type your message here..." />
+            <button id="sendMessageBtn">Send</button>
+        </div>
+    </div>
+
+    <script src="user-script.js"></script>
+</body>
+</html>

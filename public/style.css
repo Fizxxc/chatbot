@@ -1,0 +1,144 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Container */
+.container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    margin-right: 0.8rem;
+}
+
+.header div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.header .status {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    font-weight: 600;
+    text-align: center;
+    width: fit-content;
+    color: white;
+}
+
+.header .status.online {
+    background-color: #4CAF50;
+}
+
+.header .status.offline {
+    background-color: #f44336;
+}
+
+/* Chat Messages */
+.chat-messages {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #fafafa;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.chat-messages p {
+    margin: 0.8rem 0;
+}
+
+.chat-messages strong {
+    color: #333;
+}
+
+/* Chat Input */
+.chat-input {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.chat-input input:focus {
+    border-color: #4CAF50;
+}
+
+.chat-input button {
+    padding: 0.6rem 1rem;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .chat-messages {
+        height: 250px;
+    }
+
+    .chat-input input {
+        font-size: 0.85rem;
+    }
+
+    .chat-input button {
+        font-size: 0.85rem;
+    }
+}
