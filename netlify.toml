@@ -1,0 +1,12 @@
+[build]
+  functions = "functions"  # Tentukan lokasi folder functions
+  publish = "public"      # Folder publik untuk file statis (HTML, CSS, JS)
+
+[context.production.environment]
+  NODE_VERSION = "14"     # Tentukan versi Node.js yang akan digunakan
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/server"
+  status = 200
+  force = true
