@@ -3,6 +3,7 @@ const adminStatusEl = document.getElementById('adminStatus');
 const chatMessagesEl = document.getElementById('chatMessages');
 const userMessageInput = document.getElementById('userMessageInput');
 const sendMessageBtn = document.getElementById('sendMessageBtn');
+const usernameInput = document.getElementById('usernameInput');
 
 // Load Admin Status
 const loadAdminStatus = async () => {
@@ -12,32 +13,43 @@ const loadAdminStatus = async () => {
     adminStatusEl.className = `status ${online ? 'online' : 'offline'}`;
 };
 
-// Load Messages
+// Load Messages for specific username
 const loadMessages = async () => {
-    const response = await fetch('/messages');
+    const username = usernameInput.value.trim();
+    if (!username) return; // Harus isi username dulu
+
+    const response = await fetch(`/messages/${username}`);
     const messages = await response.json();
-    chatMessagesEl.innerHTML = messages
-        .map(
-            (msg) => `
-            <p><strong>${msg.sender === 'user' ? 'You' : 'Admin Fizzx'}:</strong> ${msg.text}</p>
-            `
-        )
-        .join('');
+
+    chatMessagesEl.innerHTML = messages.map((msg) => {
+        let html = `<p><strong>${msg.sender === 'user' ? 'You' : 'Admin Fizzx'}:</strong> ${msg.text}</p>`;
+        if (msg.reply) {
+            html += `<p><strong>Admin Fizzx:</strong> ${msg.reply}</p>`;
+        }
+        return html;
+    }).join('');
+    
     chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
 };
 
 // Send Message
 const sendMessage = async () => {
+    const username = usernameInput.value.trim();
     const message = userMessageInput.value.trim();
-    if (message) {
-        await fetch('/messages', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sender: 'user', text: message }),
-        });
-        userMessageInput.value = '';
-        loadMessages();
+
+    if (!username || !message) {
+        alert('Please enter your username and message.');
+        return;
     }
+
+    await fetch('/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, sender: 'user', text: message }),
+    });
+
+    userMessageInput.value = '';
+    loadMessages();
 };
 
 // Event Listeners
@@ -48,4 +60,4 @@ userMessageInput.addEventListener('keypress', (e) => {
 
 // Auto-Refresh Admin Status and Messages
 setInterval(loadAdminStatus, 3000);
-setInterval(loadMessages, 1000);
+setInterval(loadMessages, 1500);
