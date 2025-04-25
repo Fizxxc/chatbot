@@ -1,36 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Admin</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>There is Maintenance going on</title>
 </head>
+    <style>
+        /* Style untuk body */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Container untuk konten maintenance */
+.maintenance-container {
+    text-align: center;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.maintenance-container h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+}
+
+.maintenance-container p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #666;
+}
+
+/* Container untuk menampilkan waktu server */
+.time-container {
+    text-align: center; /* Menjadikan teks di dalamnya rata tengah */
+    background-color: white; /* Latar belakang putih untuk kotak konten */
+    padding: 40px; /* Padding di dalam kotak */
+    border-radius: 10px; /* Sudut kotak yang melengkung */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan lembut di sekitar kotak */
+}
+
+.time-container h1 {
+    font-size: 36px; /* Ukuran font untuk judul */
+    margin-bottom: 20px; /* Spasi bawah setelah judul */
+    color: #4CAF50; /* Warna hijau untuk teks judul */
+}
+
+.time-container p {
+    font-size: 24px; /* Ukuran font untuk teks waktu */
+    color: #555; /* Warna teks abu-abu medium */
+}
+
+/* Container untuk hitungan mundur */
+.countdown-container {
+    text-align: center; /* Menjadikan teks di dalamnya rata tengah */
+    background-color: white; /* Latar belakang putih untuk kotak konten */
+    padding: 40px; /* Padding di dalam kotak */
+    border-radius: 10px; /* Sudut kotak yang melengkung */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan lembut di sekitar kotak */
+}
+
+.countdown-container h1 {
+    font-size: 36px; /* Ukuran font untuk judul */
+    margin-bottom: 20px; /* Spasi bawah setelah judul */
+    color: #FF6347; /* Warna merah tomato untuk teks judul */
+}
+
+#countdown {
+    font-size: 24px; /* Ukuran font untuk waktu */
+    color: #333; /* Warna teks abu gelap */
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Jarak antar elemen waktu */
+}
+
+#countdown span {
+    background-color: #2f7195; /* Warna latar belakang hijau */
+    padding: 10px 20px; /* Ruang dalam elemen waktu */
+    color: white; /* Warna teks putih */
+    border-radius: 5px; /* Sudut melengkung pada elemen waktu */
+}
+
+h1{
+    text-align: center;
+}
+/* Style untuk tombol pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 5px;
+    transition: background-color 0.3s;
+}
+
+.pagination a.active {
+    background-color: #2f7195;
+    color: white;
+    border: 1px solid #2f7195;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+p {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+    </style>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="admin.jpeg" alt="Admin Avatar">
-            <div>
-                <p>Chat Admin Fizzx</p>
-                <span id="adminStatus" class="status offline">Offline</span>
-            </div>
-        </div>
 
-        <!-- Tambahan: input username -->
-        <div class="username-input">
-            <input type="text" id="usernameInput" placeholder="Enter your username..." />
-        </div>
+    <div class="maintenance-container">
+        <h1>We'll Be Back Soon!</h1>
+        <p>Sorry for the inconvenience but we're performing some update at the moment. We'll be back online shortly!</p>
+        <p>— X.DKV Team</p>
+        <p id="waktu"></p> <!-- Waktu akan ditampilkan di sini -->
+    </div>
 
-        <div class="chat-messages" id="chatMessages">
-            <p>Welcome! Start the conversation by sending a message.</p>
-        </div>
+    <script>
+        // Fungsi untuk menampilkan waktu WIB
+        function tampilkanWaktuWIB() {
+            // Membuat objek Date dengan waktu UTC (Greenwich Mean Time)
+            const now = new Date();
 
-        <div class="chat-input">
-            <input type="text" id="userMessageInput" placeholder="Type your message here..." />
-            <button id="sendMessageBtn">Send</button>
+            // Menambahkan offset 7 jam untuk mendapatkan WIB (UTC+7)
+            const options = { timeZone: 'Asia/Jakarta', hour12: false, 
+                year: 'numeric', month: '2-digit', day: '2-digit', 
+                hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            
+            // Mengubah waktu ke format yang kita inginkan
+            const waktuWIB = now.toLocaleString('id-ID', options);
+
+            // Menampilkan waktu WIB di elemen dengan id 'waktu'
+            document.getElementById('waktu').innerHTML = waktuWIB;
+        }
+
+        // Memperbarui waktu setiap 1 detik (1000 ms)
+        setInterval(tampilkanWaktuWIB, 1000);
+    </script>
+
+    <div class="countdown-container">
+        <h1>Situs Sedang Update</h1>
+        <p>Update selesai dalam:</p>
+        <div id="countdown">
+            <span id="days"></span> Hari 
+            <span id="hours"></span> Jam 
+            <span id="minutes"></span> Menit 
+            <span id="seconds"></span> Detik
         </div>
     </div>
 
-    <script src="/user-script.js"></script>
+    <script>
+        // Tentukan waktu kapan maintenance selesai (contoh: 30 September 2024 pukul 12:00:00 WIB)
+        const maintenanceEndTime = new Date("Apr 30, 2025 9:30:00").getTime();
+
+        // Update hitungan mundur setiap 1 detik
+        const countdownInterval = setInterval(function() {
+            // Waktu saat ini
+            const now = new Date().getTime();
+            
+            // Hitung selisih antara waktu maintenance selesai dan sekarang
+            const timeLeft = maintenanceEndTime - now;
+            
+            // Konversi waktu yang tersisa ke hari, jam, menit, dan detik
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            // Tampilkan hasil hitung mundur di elemen HTML
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+
+            // Jika hitung mundur selesai, tampilkan pesan bahwa maintenance telah selesai
+            if (timeLeft < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector(".countdown-container").innerHTML = "<h1>Maintenance telah selesai!</h1>";
+            }
+        }, 1000);
+    </script>
+
 </body>
-</html>
