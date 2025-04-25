@@ -13,6 +13,8 @@ app.get('/messages', (req, res) => {
     res.json(messages);
 });
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Post pesan baru
 app.post('/messages', (req, res) => {
     const { sender, text } = req.body;
