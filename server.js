@@ -1,31 +1,38 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path'); // <- FIX: Tambahkan ini
+const path = require('path');
 const app = express();
 
-let messages = []; // Array untuk menyimpan pesan
+// Objek untuk menyimpan pesan per username
+let messages = {}; // { username: [ {sender, text, reply} ] }
+
 let adminStatus = { online: false }; // Status admin (online/offline)
 
 app.use(bodyParser.json());
-
-// Melayani file statis dari folder 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Get semua pesan
-app.get('/messages', (req, res) => {
-    res.json(messages);
+// Ambil semua pesan milik user tertentu
+app.get('/messages/:username', (req, res) => {
+    const { username } = req.params;
+    res.json(messages[username] || []);
 });
 
-// Post pesan baru
+// Kirim pesan
 app.post('/messages', (req, res) => {
-    const { sender, text } = req.body;
+    const { username, sender, text } = req.body;
+
+    // Jika belum ada array untuk user ini, buatkan
+    if (!messages[username]) messages[username] = [];
+
     const reply = adminStatus.online && sender === 'user' ? null : generateReply(text);
+
     const newMessage = { sender, text, reply };
-    messages.push(newMessage);
+    messages[username].push(newMessage);
+
     res.json(newMessage);
 });
 
-// Get status admin
+// Ambil status admin
 app.get('/admin-status', (req, res) => {
     res.json(adminStatus);
 });
@@ -37,14 +44,15 @@ app.post('/admin-status', (req, res) => {
     res.json(adminStatus);
 });
 
-// Handle favicon.ico request to prevent error spam
+// Hindari spam error favicon
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
-// Fungsi untuk balasan otomatis
+// Fungsi balasan otomatis
 function generateReply(userMessage) {
-    if (userMessage.toLowerCase().includes('hello')) {
+    const msg = userMessage.toLowerCase();
+    if (msg.includes('hello')) {
         return 'Hi there! How can I help you today?';
-    } else if (userMessage.toLowerCase().includes('refund')) {
+    } else if (msg.includes('refund')) {
         return 'Sure, I can assist you with refunds. Can you share your order ID?';
     } else {
         return 'Thank you for your message. Let me forward it to our team.';
