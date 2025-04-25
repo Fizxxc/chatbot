@@ -1,19 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path'); // <- FIX: Tambahkan ini
 const app = express();
 
 let messages = []; // Array untuk menyimpan pesan
 let adminStatus = { online: false }; // Status admin (online/offline)
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+
+// Melayani file statis dari folder 'public'
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Get semua pesan
 app.get('/messages', (req, res) => {
     res.json(messages);
 });
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Post pesan baru
 app.post('/messages', (req, res) => {
@@ -35,6 +36,9 @@ app.post('/admin-status', (req, res) => {
     adminStatus.online = online;
     res.json(adminStatus);
 });
+
+// Handle favicon.ico request to prevent error spam
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // Fungsi untuk balasan otomatis
 function generateReply(userMessage) {
